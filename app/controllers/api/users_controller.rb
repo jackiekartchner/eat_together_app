@@ -7,6 +7,43 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    
+    @user = User.find(params[:id])
+    render 'show.json.jb'
+  end
+
+  def create
+    @user = User.new(
+        full_name: params[:full_name],
+        phone_number: params[:phone_number],
+        email: params[:email],
+        zip_code: params[:zip_code]
+      )
+    if @user.save 
+      render 'show.json.jb'
+    else
+      render json: {errors: @user.errors.full_messages},
+      status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @user.full_name = params[:full_name] || @user.full_name
+    @user.phone_number = params[:phone_number] || @user.phone_number
+    @user.email = params[:email] || @user.email
+    @user.zip_code = params[:zip_code] || @user.zip_code
+
+    if @user.save 
+      render 'show.json.jb'
+    else
+      render json: {errors: @user.errors.full_messages},
+      status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    user = User.find(params[:id])
+    user.destroy
+    render json: {message: "Successfully Destroyed User"}
   end
 end

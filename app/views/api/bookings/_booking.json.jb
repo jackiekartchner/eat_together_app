@@ -1,0 +1,7 @@
+{
+  id: booking.id,
+  yelp_api_id: booking.yelp_api_id,
+  user1_id: booking.user1_id,
+  user2_id: booking.user2_id,
+  appointment: booking.appointment
+}

@@ -1,0 +1,8 @@
+{
+  id: craving.id,
+  radius: craving.radius,
+  category: craving.category,
+  price: craving.price,
+  user_id: craving.user_id,
+  appointment: craving.appointment
+}

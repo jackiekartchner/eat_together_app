@@ -1,0 +1,3 @@
+@cravings.map do |craving|
+  render partial: "craving.json.jb", locals: { craving: craving }
+end
