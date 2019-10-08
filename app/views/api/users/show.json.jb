@@ -1,2 +1,5 @@
-render partial: "user.json.jb", locals: { user: @user }
+user = render partial: "user.json.jb", locals: { user: @user }
 
+user[:cravings] = @user.cravings
+
+user
