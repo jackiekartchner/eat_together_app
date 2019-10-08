@@ -1,1 +1,11 @@
-render partial: "craving.json.jb", locals: { craving: @craving }
+craving = render partial: "craving.json.jb", locals: { craving: @craving }
+
+craving[:user] = {
+  id: @craving.user.id,
+  full_name: @craving.user.full_name,
+  phone_number: @craving.user.phone_number,
+  email: @craving.user.email,
+  zip_code: @craving.user.zip_code
+}
+
+craving

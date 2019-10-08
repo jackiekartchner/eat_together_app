@@ -1,1 +1,20 @@
-render partial: "booking.json.jb", locals: { booking: @booking }
+booking = render partial: "booking.json.jb", locals: { booking: @booking }
+
+booking[:user1] = {
+  id: @booking.user1.id,
+  full_name: @booking.user1.full_name,
+  phone_number: @booking.user1.phone_number,
+  email: @booking.user1.email,
+  zip_code: @booking.user1.zip_code
+}
+
+booking[:user2] = {
+  id: @booking.user2.id,
+  full_name: @booking.user2.full_name,
+  phone_number: @booking.user2.phone_number,
+  email: @booking.user2.email,
+  zip_code: @booking.user2.zip_code
+}
+
+booking
+
