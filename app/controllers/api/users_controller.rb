@@ -12,7 +12,7 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    user = User.new(
+    @user = User.new(
         full_name: params[:full_name],
         phone_number: params[:phone_number],
         email: params[:email],
@@ -20,10 +20,10 @@ class Api::UsersController < ApplicationController
         password: params[:password],
         password_confirmation: params[:password_confirmation]
       )
-    if user.save 
-      render json: {message: 'User created successfully'}, status: :created
+    if @user.save 
+      render 'show.json.jb'
     else
-      render json: {errors: user.errors.full_messages},
+      render json: {errors: @user.errors.full_messages},
       status: :unprocessable_entity
     end
   end
@@ -49,3 +49,6 @@ class Api::UsersController < ApplicationController
     render json: {message: "Successfully Destroyed User"}
   end
 end
+
+
+
