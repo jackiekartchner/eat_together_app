@@ -3,7 +3,5 @@
   full_name: user.full_name,
   phone_number: user.phone_number,
   email: user.email,
-  zip_code: user.zip_code,
-  password: user.password,
-  password_confirmation: user.password_confirmation
+  zip_code: user.zip_code
 }
