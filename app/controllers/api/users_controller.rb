@@ -1,10 +1,10 @@
 class Api::UsersController < ApplicationController
 
 #will not be needing a backend index, but wanted it here just for reference
-  def index
-    @users = User.all
-    render 'index.json.jb'
-  end
+  # def index
+  #   @users = User.all
+  #   render 'index.json.jb'
+  # end
 
   def show
     @user = User.find(params[:id])
@@ -12,7 +12,7 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(
+    user = User.new(
         full_name: params[:full_name],
         phone_number: params[:phone_number],
         email: params[:email],
@@ -20,10 +20,10 @@ class Api::UsersController < ApplicationController
         password: params[:password],
         password_confirmation: params[:password_confirmation]
       )
-    if @user.save 
+    if user.save 
       render 'show.json.jb'
     else
-      render json: {errors: @user.errors.full_messages},
+      render json: {errors: user.errors.full_messages},
       status: :unprocessable_entity
     end
   end

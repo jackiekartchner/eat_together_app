@@ -1,7 +1,13 @@
 class Api::CravingsController < ApplicationController
   def index
     @cravings = Craving.all
-    render 'index.json.jb'
+    if current_user
+      @cravings = Craving.where("user_id =?", current_user.id)
+      @cravings = @cravings.order(:id)
+      render 'index.json.jb'
+  else
+    render json: []
+    end
   end
 
   def show

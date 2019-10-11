@@ -7,8 +7,20 @@ class Booking < ApplicationRecord
     yelp_info = response.parse
     restaurant = {
       id: yelp_info["id"],
+      image_url: yelp_info["image_url"],
       name: yelp_info["name"],
-      categories: yelp_info["categories"]
+      price: yelp_info["price"],
+      display_address: yelp_info["location"]["display_address"].join(' '),
+      display_phone: yelp_info["display_phone"],
+      url: yelp_info["url"],
+      categories: yelp_info["categories"].map { |category| category[:title] }
     }
   end
 end
+
+
+
+
+
+
+
