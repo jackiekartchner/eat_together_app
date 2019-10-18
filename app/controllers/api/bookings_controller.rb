@@ -15,21 +15,6 @@ class Api::BookingsController < ApplicationController
     render 'show.json.jb'
   end
 
-  def create
-    @booking = Booking.new(
-        yelp_api_id: params[:yelp_api_id],
-        user1_id: params[:user1_id],
-        user2_id: params[:user2_id],
-        appointment: params[:appointment]
-      )
-    if @booking.save 
-      render 'show.json.jb'
-    else
-      render json: {errors: @booking.errors.full_messages},
-      status: :unprocessable_entity
-    end
-  end
-
   def destroy
     booking = Booking.find(params[:id])
     booking.destroy

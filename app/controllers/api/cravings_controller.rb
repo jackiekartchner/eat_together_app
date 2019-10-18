@@ -20,14 +20,25 @@ class Api::CravingsController < ApplicationController
         radius: params[:radius],
         category: params[:category],
         price: params[:price],
-        user_id: params[:user_id],
+        user_id: current_user.id,
         appointment: params[:appointment],
       )
-    if @craving.save 
-      render 'show.json.jb'
-    else
-      render json: {errors: @craving.errors.full_messages},
-      status: :unprocessable_entity
+    if @craving.save  #logic to check for match
+      if @craving.match
+        #create new booking
+        @booking = Booking.new(
+            yelp_api_id: @craving.yelp_api_id,
+            user1_id: @craving.user_id,
+            user2_id: @craving.match.user_id,
+            appointment: @craving.appointment
+          )
+        if @booking.save 
+          render 'show.json.jb'
+        else
+          render json: {errors: @booking.errors.full_messages},
+          status: :unprocessable_entity
+        end
+      end
     end
   end
 

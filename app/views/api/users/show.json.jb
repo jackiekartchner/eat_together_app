@@ -4,4 +4,8 @@ user[:cravings] = @user.cravings.map do |craving|
   render partial: "api/cravings/craving", locals: { craving: craving }
 end
 
+# user[:bookings] = @user.bookings.map do |booking|
+#   render partial: "api/bookings/booking", locals: { booking: booking }
+# end
+
 user
