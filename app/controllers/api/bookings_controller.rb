@@ -1,13 +1,7 @@
 class Api::BookingsController < ApplicationController
   def index
-    @bookings = Booking.all
-    if current_user
-      @bookings = Booking.where("user1_id =? OR user2_id =?",current_user.id, current_user.id)
-      @bookings = @bookings.order(:id)
-      render 'index.json.jb'
-  else
-    render json: []
-    end
+    @bookings = current_user.bookings
+    render 'index.json.jb'
   end
 
   def show

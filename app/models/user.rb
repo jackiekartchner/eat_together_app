@@ -4,7 +4,9 @@ class User < ApplicationRecord
   validates :zip_code, presence: true, numericality: true
   
   has_many :cravings
-  has_many :bookings, as: :user1
-  has_many :bookings, as: :user2
+
+  def bookings
+    booking = Booking.where("user1_id = ? OR user2_id = ?", id, id)
+  end
 
 end

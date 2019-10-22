@@ -1,4 +1,7 @@
 class Api::CravingsController < ApplicationController
+
+  before_action :authenticate_user, only: [:create, :update, :destroy]
+
   def index
     @cravings = Craving.all
     if current_user
@@ -9,11 +12,11 @@ class Api::CravingsController < ApplicationController
     render json: []
     end
   end
-
-  def show
-    @craving = Craving.find(params[:id])
-    render 'show.json.jb'
-  end
+#wouldn't need a show page because the User Show shows both cravings and bookings
+  # def show
+  #   @craving = Craving.find(current_user.id)
+  #   render 'show.json.jb'
+  # end
 
   def create
     @craving = Craving.new(

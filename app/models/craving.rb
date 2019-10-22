@@ -14,7 +14,7 @@ class Craving < ApplicationRecord
   end
 
   def yelp_api_id
-    response = HTTP.auth("Bearer #{ENV["YELP_API_KEY"]}").get("https://api.yelp.com/v3/businesses/search?location=#{user.zip_code}&categories=#{category}")
+    response = HTTP.auth("Bearer #{ENV["YELP_API_KEY"]}").get("https://api.yelp.com/v3/businesses/search?location=#{user.zip_code}&categories=#{category.downcase}")
     yelp_info = response.parse["businesses"][1]["id"]
     return yelp_info
   end
