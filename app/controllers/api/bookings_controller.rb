@@ -1,32 +1,26 @@
 class Api::BookingsController < ApplicationController
-  def index
-    @bookings = current_user.bookings
-    render 'index.json.jb'
-  end
 
-  def show
-    @booking = Booking.find(params[:id])
-    render 'show.json.jb'
-  end
+  before_action :authenticate_user, only: [:destroy]
+
+  # def index
+  #   @bookings = current_user.bookings
+  #   render 'index.json.jb'
+  # end
+
+  # def show
+  #   @booking = Booking.find(params[:id])
+  #   render 'show.json.jb'
+  # end
 
   def destroy
     booking = Booking.find(params[:id])
+    if current_user.id == booking.user1_id || current_user.id == booking.user2_id
     booking.destroy
-    render json: {message: "Successfully Destroyed Your Booking"}
+    render json: {message: "Successfully deleted your booking!"}
+    else
+      render json: {message: "Unable to delete this user's booking."}
+    end
   end
 end
-  # def update
-  #   @booking = Booking.find(params[:id])
-  #   @booking.yelp_api_id = params[:yelp_api_id] || @booking.yelp_api_id
-  #   @booking.user1_id = params[:user1_id] || @booking.user1_id
-  #   @booking.user2_id = params[:user2_id] || @booking.user2_id
-  #   @booking.appointment = params[:appointment] || @booking.appointment
 
-  #   if @booking.save 
-  #     render 'show.json.jb'
-  #   else
-  #     render json: {errors: @booking.errors.full_messages},
-  #     status: :unprocessable_entity
-  #   end
-  # end
 
