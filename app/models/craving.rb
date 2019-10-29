@@ -3,7 +3,7 @@ class Craving < ApplicationRecord
 
   def match
     #return the craving match OR return nill
-    cravings = Craving.where("category = ? AND appointment = ? AND id != ?", category, appointment, id)
+    cravings = Craving.where("category = ? AND appointment = ? AND id != ? AND user_id != ?", category, appointment, id, user_id)
     cravings.each do |craving|
       if craving.user.zip_code == user.zip_code
         return craving
