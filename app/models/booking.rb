@@ -13,7 +13,7 @@ class Booking < ApplicationRecord
       display_address: yelp_info["location"]["display_address"].join(' '),
       display_phone: yelp_info["display_phone"],
       url: yelp_info["url"],
-     categories: yelp_info["categories"].map { |category| category["title"] }
+     categories: yelp_info["categories"].map { |category| category["title"] }.join(", ")
     }
   end
 end

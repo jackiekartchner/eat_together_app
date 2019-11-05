@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
   # before_action :authenticate_user, only: [:update, :destroy]
 
   def show
-    @user = User.find(current_user.id)
+    @user = current_user
     render 'show.json.jb'
   end
 
@@ -13,6 +13,7 @@ class Api::UsersController < ApplicationController
         phone_number: params[:phone_number],
         email: params[:email],
         zip_code: params[:zip_code],
+        bio: params[:bio],
         password: params[:password],
         password_confirmation: params[:password_confirmation]
       )
@@ -31,6 +32,7 @@ class Api::UsersController < ApplicationController
       @user.phone_number = params[:phone_number] || @user.phone_number
       @user.email = params[:email] || @user.email
       @user.zip_code = params[:zip_code] || @user.zip_code
+      @user.bio = params[:bio] || @user.bio
       if params[:password] 
         @user.password = params[:password] 
       end

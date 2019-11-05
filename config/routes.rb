@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     delete "/bookings/:id" => "bookings#destroy"
 
     get "/cravings" => "cravings#index"
-    # get "/cravings/:id" => "cravings#show"
+    get "/cravings/:id" => "cravings#show"
     post "/cravings" => "cravings#create"
     patch "/cravings/:id" => "cravings#update"
     delete "/cravings/:id" => "cravings#destroy"

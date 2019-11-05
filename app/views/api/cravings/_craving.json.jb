@@ -3,5 +3,6 @@
   radius: craving.radius,
   category: craving.category,
   price: craving.price,
-  appointment: craving.appointment
+  appointment: craving.appointment,
+  updated_at: craving.updated_at
 }
