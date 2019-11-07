@@ -47,8 +47,9 @@ class Api::CravingsController < ApplicationController
 
           message = @client.messages.create(
             body: "A booking has been created!",
-            to: "+19252169722",    # Replace with your phone number
-            from: "+17329032851")  # Use this Magic Number for creating SMS
+            to: "+19252169722",
+            # to: "+18053002432",    
+            from: "+17329032851")  
 
           puts message.sid
           render 'show.json.jb'
