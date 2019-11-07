@@ -42,7 +42,7 @@ class Api::CravingsController < ApplicationController
         if @booking.save 
           #send message with Twilio
           account_sid = 'ACeab03714346174626f6a236c9afb233a'
-          auth_token = 'TWILIO_API_KEY'
+          auth_token = ENV["TWILIO_API_KEY"]
           @client = Twilio::REST::Client.new(account_sid, auth_token)
 
           message = @client.messages.create(
