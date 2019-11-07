@@ -40,6 +40,17 @@ class Api::CravingsController < ApplicationController
             appointment: @craving.appointment
           )
         if @booking.save 
+          #send message with Twilio
+          account_sid = 'ACeab03714346174626f6a236c9afb233a'
+          auth_token = '5c03bdf9f38e4f2b2943079b05266104'
+          @client = Twilio::REST::Client.new(account_sid, auth_token)
+
+          message = @client.messages.create(
+            body: "A booking has been created!",
+            to: "+19252169722",    # Replace with your phone number
+            from: "+17329032851")  # Use this Magic Number for creating SMS
+
+          puts message.sid
           render 'show.json.jb'
         else
           render json: {errors: @booking.errors.full_messages},
