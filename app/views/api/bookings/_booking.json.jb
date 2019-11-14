@@ -1,5 +1,6 @@
 {
   id: booking.id,
-  appointment: booking.appointment,
-  restaurant: booking.restaurant
+  appointment: booking.appointment.to_s(:db),
+  restaurant: booking.restaurant,
+  updated_at: booking.updated_at
 }

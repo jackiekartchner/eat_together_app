@@ -6,7 +6,7 @@ class Api::CravingsController < ApplicationController
     @cravings = Craving.all
     if current_user
       @cravings = Craving.where("user_id =?", current_user.id)
-      @cravings = @cravings.order(:id)
+      @cravings = @cravings.order(:updated_at => :desc)
       render 'index.json.jb'
     else
       render json: {message: "Unathorized to show this user's cravings."}
@@ -30,7 +30,8 @@ class Api::CravingsController < ApplicationController
         user_id: current_user.id,
         appointment: params[:appointment],
       )
-    if @craving.save  #logic to check for match
+    if @craving.save
+    #logic to check for match
       if @craving.match
         #create new booking
         @booking = Booking.new(
@@ -40,18 +41,22 @@ class Api::CravingsController < ApplicationController
             appointment: @craving.appointment
           )
         if @booking.save 
+          # @craving.satisfied(@booking.user1_id, @booking.user2_id)
           #send message with Twilio
           account_sid = 'ACeab03714346174626f6a236c9afb233a'
           auth_token = ENV["TWILIO_API_KEY"]
           @client = Twilio::REST::Client.new(account_sid, auth_token)
 
+          numbers_to_message = [@booking.user1.phone_number, @booking.user2.phone_number]
+          numbers_to_message.each do |number|
           message = @client.messages.create(
-            body: "A booking has been created!",
-            to: "+19252169722",
-            # to: "+18053002432",    
-            from: "+17329032851")  
+            body: "Congratulations! A booking has been created for you via the Eat Together App! You will be eating at #{@booking.restaurant[:name]} on #{@booking.appointment}. You can go onto the Eat Together website for more details about your booking and your eating partner. Thank you and have an awesome day!",
+            from: '+17329032851',
+            to: number
+            )  
 
-          puts message.sid
+          puts message.status
+        end
           render 'show.json.jb'
         else
           render json: {errors: @booking.errors.full_messages},
@@ -68,7 +73,8 @@ class Api::CravingsController < ApplicationController
       @craving.category = params[:category] || @craving.category
       @craving.price = params[:price] || @craving.price
       @craving.appointment = params[:appointment] || @craving.appointment
-      if @craving.save  #logic to check for match
+      if @craving.save  
+      #logic to check for match
         if @craving.match
           #create new booking
           @booking = Booking.new(
@@ -78,6 +84,20 @@ class Api::CravingsController < ApplicationController
               appointment: @craving.appointment
             )
           if @booking.save 
+            account_sid = 'ACeab03714346174626f6a236c9afb233a'
+            auth_token = ENV["TWILIO_API_KEY"]
+            @client = Twilio::REST::Client.new(account_sid, auth_token)
+
+            numbers_to_message = [@booking.user1.phone_number, @booking.user2.phone_number]
+            numbers_to_message.each do |number|
+            message = @client.messages.create(
+              body: "Congratulations! A booking has been created for you via the Eat Together App! You will be eating at #{@booking.restaurant[:name]} on #{@booking.appointment}. You can go onto the Eat Together website for more details about your booking and your eating partner. Thank you and have an awesome day!",
+              from: '+17329032851',
+              to: number
+              )  
+
+            puts message.status
+          end
             render 'show.json.jb'
           else
             render json: {errors: @booking.errors.full_messages},

@@ -3,6 +3,7 @@
   radius: craving.radius,
   category: craving.category,
   price: craving.price,
-  appointment: craving.appointment,
-  updated_at: craving.updated_at
+  appointment: craving.appointment.to_s(:db),
+  updated_at: craving.updated_at,
+  category_image: craving.category_image
 }
